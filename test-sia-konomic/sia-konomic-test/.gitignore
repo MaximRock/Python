@@ -1,6 +1,0 @@
-venv
-.idea
-__pycache__
-test-sia-konomic/base/__pycache__
-test-sia-konomic/pom/__pycache__
-test-sia-konomic/tests/__pycache__
