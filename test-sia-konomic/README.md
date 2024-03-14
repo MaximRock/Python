@@ -1,6 +1,10 @@
 ## Тестирование формы регистрации
 https://exchange.konomik.com/authorization/signup
 
+Тестирование проводилось в браузере __Google Chrome__ 
+
+Версия 122.0.6261.111 (Официальная сборка), (64 бит)
+
 Установка Selenium 
 ```
 pip install webdriver-manager
