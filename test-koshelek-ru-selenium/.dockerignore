@@ -5,5 +5,5 @@ __pycache__
 base/__init__.py
 pom/__init__.py
 tests/__init__.py
-image
+.images
 registration-check-sheet.txt

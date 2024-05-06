@@ -42,15 +42,15 @@ command: ["pytest", "-v", "-m screenshot", "tests/test_page.py", "--alluredir=al
 Тесты с маркером __screenshot__ сохраняются в директории __screenshot__.
 #####
 Пример отчета:
-
+![allure_1.png](/.images/allure_1.png)
 #####
 Тест с маркером __screenshot__:
-![allure_2.png](/image/allure_2.png)
+![allure_2.png](/.images/allure_2.png)
 #####
 Каждый тест снабжен скриншотом во вкладке __Tear down__.
 ######
 Пример отчета:
-![allure_3.png](/image/allure_3.png)
+![allure_3.png](/.images/allure_3.png)
 
 
 
