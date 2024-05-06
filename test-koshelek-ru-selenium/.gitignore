@@ -1,0 +1,9 @@
+__pycache__
+.idea
+.pytest_cache
+.venv
+base/__init__.py
+pom/__init__.py
+tests/__init__.py
+image
+registration-check-sheet.txt
