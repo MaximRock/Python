@@ -1,5 +1,5 @@
 # Тестирование формы регистрации
-Стенд https://koshelek.ru 
+Стенд: https://koshelek.ru 
 
 Браузер __Google Chrome__ Версия 122.0.6261.111 (Официальная сборка), (64 бит)
 
@@ -42,7 +42,7 @@ command: ["pytest", "-v", "-m screenshot", "tests/test_page.py", "--alluredir=al
 Тесты с маркером __screenshot__ сохраняются в директории __screenshot__.
 #####
 Пример отчета:
-![allure_1.png](/image/allure_1.png)
+
 #####
 Тест с маркером __screenshot__:
 ![allure_2.png](/image/allure_2.png)
