@@ -9,3 +9,4 @@ tests/__init__.py
 registration-check-sheet.txt
 allure-results
 docker-results
+.vagrant
