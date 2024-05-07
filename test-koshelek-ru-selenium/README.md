@@ -70,9 +70,11 @@ command: ["pytest", "-v", "-m screenshot", "tests/test_page.py", "--alluredir=al
 Тесты с маркером __screenshot__ сохраняются в директории __screenshot__.
 #####
 Пример отчета:
-######
-![allure_1](https://github.com/MaximRock/Python/assets/95434302/05f1074a-449b-4a7d-a33d-7898d930343d)
 #####
+![allure_4](https://github.com/MaximRock/Python/assets/95434302/ad05976a-c231-4738-a1f5-ea7db6e51119)
+#####
+![allure_1](https://github.com/MaximRock/Python/assets/95434302/05f1074a-449b-4a7d-a33d-7898d930343d)
+####
 Тест с маркером __screenshot__:
 ######
 ![allure_2](https://github.com/MaximRock/Python/assets/95434302/c1fa6e1d-deec-4aec-9307-1ee3b03acb04)
