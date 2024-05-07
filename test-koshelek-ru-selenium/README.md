@@ -1,11 +1,12 @@
 # Тестирование формы регистрации
 Стенд: https://koshelek.ru 
+######
 Системные требования:
 - Linux Ubuntu 22.04.4 LTS
 - Python 3.10
 - Браузер __Google Chrome__ Версия 122.0.6261.111 (Официальная сборка), (64 бит)
 
-Установка файла requirements.txt
+Установка файла __requirements.txt__
 ````
 pip3 install -r requirements.txt
 ````
