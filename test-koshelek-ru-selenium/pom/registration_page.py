@@ -1,8 +1,7 @@
 import allure
-import os
+
 from selenium.webdriver.remote.webelement import WebElement
 from base.base import BasePage
-from allure_commons.types import AttachmentType
 
 
 class RegistrationPage(BasePage):
@@ -21,16 +20,16 @@ class RegistrationPage(BasePage):
         self.__password_visibility_icon_click: str = '[data-wi=password] [name=AUTH.preview-open]'
         self.__submit_button: str = '[data-wi=submit-button] span.v-btn__content'
         self.__check_box_i_agree: str = '[data-wi=user-agreement] #input-177'
-        self.__check_box_false: str = '[data-wi=user-agreement] [aria-checked=false]'
+        self.__check_box_false: str = '[aria-checked=false]'
         self.__username_entry_field: str = '[data-wi=user-name] #input-125'
         self.__email_entry_field: str = '[data-wi=identificator] [type=email]'
         self.__password_entry_field: str = '[data-wi=password] [name=new-password]'
         self.__link_referal_correctness: str = '[data-wi=referral] [data-wi=message] span.k-text'
         self.__link_referal_entry_field: str = '[data-wi=referral] #input-165'
+        self.__username_pop_up_text: str = \
+            "[data-wi=notifications] [data-wi=notification-item] [data-wi=text] span.k-text"
 
     # ================= test_check_all_empty_fields ====================================================================
-    def get_nav_link(self) -> WebElement:
-        return self.find_element(self.__nav, "Зарегистрироваться")
 
     @property
     def username_form_checking_correctness(self) -> str | None:
@@ -48,6 +47,12 @@ class RegistrationPage(BasePage):
     def password_form_checking_correctness(self) -> str | None:
         return (self.shadow_root(self.__shadow_host, self.__password_checking_correctness,
                                  "Поле - Пароль - проверка правильности вводимых данных").
+                get_attribute('textContent'))
+
+    @property
+    def username_pop_up_text(self) -> str | None:
+        return (self.is_present('css', self.__username_pop_up_text,
+                                "Всплывашка - Имя пользователя недействительно").
                 get_attribute('textContent'))
 
     def user_agreement_check_box(self) -> WebElement:
@@ -80,10 +85,6 @@ class RegistrationPage(BasePage):
     def click_check_box(self) -> None:
         return self.user_agreement_check_box().click()
 
-    def password_save_screenshot(self, name_folder):
-        os.makedirs(os.path.join(os.path.dirname(name_folder)), exist_ok=True)
-        self.driver.save_screenshot(os.path.join(name_folder))
-
     # ================= test_field_username ====================================================================
     def username_input_entry_field(self) -> WebElement:
         return self.shadow_root(self.__shadow_host, self.__username_entry_field,
@@ -97,13 +98,7 @@ class RegistrationPage(BasePage):
         with allure.step("Поле username - получаем введенные данные"):
             return self.username_input_entry_field().get_attribute('value')
 
-    # def password_entry_field(self, password_valid_value: str) -> None:
-    #     return self.password_input_entry_field().send_keys(password_valid_value)
-
     # ================== test_field_email ==============================================================================
-
-    # def username_entry_field(self, username_entry_field: str) -> None:
-    #     return self.username_input_entry_field().send_keys(username_entry_field)
 
     def email_input_entry_field(self) -> WebElement:
         return self.shadow_root(self.__shadow_host, self.__email_entry_field,
@@ -146,9 +141,6 @@ class RegistrationPage(BasePage):
 
     def password_visibility_icon_click(self) -> None:
         return self.password_visibility_icon().click()
-
-    # def password_visibility_icon_activ(self) -> WebElement:
-    #     return self.shadow_root(self.__shadow_host, self.__password_visibility_icon_click, "gjkesdf")
 
     # =============== test_referal_link ================================================================================
 

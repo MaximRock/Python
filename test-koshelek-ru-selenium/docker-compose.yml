@@ -8,5 +8,5 @@ services:
     volumes:
       - ./docker-results/:/code/allure-results
       - ./screenshot/:/code/screenshot
-    command: ["pytest", "-v", "-m space", "tests/test_page.py", "--alluredir=allure-results"]
+    command: ["pytest", "-v", "-m all_tests", "tests/test_page.py", "--alluredir=allure-results"]
 

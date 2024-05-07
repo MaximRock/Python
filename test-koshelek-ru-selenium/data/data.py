@@ -1,15 +1,9 @@
 from generator.generator import Generator
-from pom.registration_page import RegistrationPage
 
 
 class Data:
 
-    required_fields = [
-        ''
-    ]
-
     username_list = [
-        # '',
         Generator.generate_cyrillic_string(1),
         Generator.generate_cyrillic_string(33),
         Generator.generate_cyrillic_string_digits(6),
@@ -23,11 +17,10 @@ class Data:
         Generator.generate_latin_string(1000),
         Generator.generate_latin_string_digits(1000),
         Generator.generate_latin_string_digits_punctuation(15),
-        Generator.generate_random_digits(25),
+        Generator.generate_random_digits(25)
     ]
 
     email_list = [
-        # '',
         'тестрок75@gmail.com',
         Generator.generate_cyrillic_string(1000),
         Generator.generate_cyrillic_string_digits(1000),
@@ -44,7 +37,6 @@ class Data:
     ]
 
     password_list = [
-        # '',
         Generator.generate_cyrillic_string(1),
         Generator.generate_cyrillic_string_digits(7),
         Generator.generate_cyrillic_string_digits(65),
