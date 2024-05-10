@@ -1,0 +1,10 @@
+---
+
+- name: Stand installation QA
+  hosts:
+    - qa
+  become: true
+  become_user: root
+  roles:
+    - role: ansible-roles/preparation-server
+      tags: prepare 

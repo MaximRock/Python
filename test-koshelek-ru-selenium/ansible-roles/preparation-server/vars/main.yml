@@ -1,0 +1,7 @@
+---
+# vars file for qa-test
+
+ver_docker_compose: "v2.27.0"
+user_name: "vagrant"
+path_folder_project: "/home/vagrant/code"
+path_file: "/home/vagrant/code/test-koshelek-ru-selenium"

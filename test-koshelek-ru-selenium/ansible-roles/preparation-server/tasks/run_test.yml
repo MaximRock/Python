@@ -1,0 +1,21 @@
+---
+
+- name: Preparetion file conftest.py
+  ansible.builtin.replace:
+    path: "/home/vagrant/src/code/test-koshelek-ru-selenium/conftest.py"
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.replace }}"
+  loop:
+    - { regexp: '^    # options.add_argument\("--headless"\)', replace: '    options.add_argument("--headless")' }
+    - { regexp: '^    options.add_argument\("chrome"\)', replace: '    # options.add_argument("chrome")' }
+    - { regexp: '^    # options.add_argument\("--window-size=1920,1080"\)', replace: '    options.add_argument("--window-size=1920,1080")' }
+    - { regexp: '^    options.add_argument\("--start-maximized"\)', replace: '    # options.add_argument("--start-maximized")' }
+
+- name: Docker compose up
+  community.docker.docker_compose:
+    project_src: "{{ path_file }}"
+    files:
+      - docker-compose.yml
+
+
+

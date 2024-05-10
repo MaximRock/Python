@@ -1,0 +1,35 @@
+---
+
+- name: Add Docker GPG apt Key
+  ansible.builtin.apt_key:
+    url: 'https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg'
+    state: present
+
+- name: Add Docker Repository
+  ansible.builtin.apt_repository:
+    repo: "deb https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable"
+    state: present
+
+- name: Update apt and install docker-ce
+  ansible.builtin.apt:
+    name: docker-ce
+    state: latest
+    update_cache: true
+
+- name: Install Docker-Compose
+  ansible.builtin.get_url:
+    url: 'https://github.com/docker/compose/releases/download/{{ ver_docker_compose }}/docker-compose-{{ ansible_system | lower }}-{{ ansible_architecture | lower}}'
+    dest: /usr/bin/docker-compose
+    mode: 0755
+
+- name: Current User
+  become_user: "{{ user_name }}"
+  ansible.builtin.shell: echo $USER
+  register: __user
+
+- name: Add user to docker group
+  ansible.builtin.user:
+    name: "{{ __user.stdout }}"
+    groups:
+      - docker
+    append: true

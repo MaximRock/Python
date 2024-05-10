@@ -24,4 +24,8 @@ Vagrant.configure("2") do |config|
             vb.name = "qa-test-docker"
         end
     end
+
+    config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "play.yml"
+    end
 end
