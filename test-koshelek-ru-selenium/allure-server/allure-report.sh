@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+echo "
+    ==== generate allure report ===="
+
 cd /home/vagrant/src/docker-results
 
 FILE_NAME_ZIP=alluer-report.zip

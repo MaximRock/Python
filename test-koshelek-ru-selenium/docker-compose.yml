@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  regression:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./docker-results/:/code/allure-results
+      - ./screenshot/:/code/screenshot
+    command: ["pytest", "-v", "-m username", "tests/test_page.py", "--alluredir=allure-results"]
+

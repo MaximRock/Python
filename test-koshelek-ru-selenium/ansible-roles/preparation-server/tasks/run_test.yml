@@ -1,5 +1,9 @@
 ---
 
+- name: Debug msg
+  ansible.builtin.debug:
+    msg: "=== running tests and installing Allure Servera in Docker ==="
+
 - name: Preparation file conftest.py
   ansible.builtin.replace:
     path: "{{ item.path }}"

@@ -1,4 +1,7 @@
 ---
+- name: Debug msg
+  ansible.builtin.debug:
+    msg: "======= installation packages ========="
 
 - name: Update and upgrade apt packages
   ansible.builtin.apt:
@@ -22,7 +25,6 @@
       - python3-pip
       - virtualenv
       - python3-setuptools
-#      - python3-dev
       - python3-virtualenv
       - zip
     state: latest
