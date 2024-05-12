@@ -11,3 +11,4 @@ allure-results
 docker-results
 .vagrant
 src
+.*
