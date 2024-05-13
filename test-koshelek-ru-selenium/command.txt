@@ -1,0 +1,4 @@
+
+ vagrant provision qa --provision-with ansible
+
+ docker system prune -a

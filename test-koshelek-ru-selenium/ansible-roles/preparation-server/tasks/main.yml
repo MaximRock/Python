@@ -1,0 +1,14 @@
+---
+# tasks file for qa-test
+
+ - name: Install required system packages
+   ansible.builtin.include_tasks: tasks/packages.yml
+
+ - name: Install Docker | docker-compose
+   ansible.builtin.include_tasks: tasks/docker.yml
+
+ - name: Clone Github repo
+   ansible.builtin.include_tasks: tasks/git.yml
+
+ - name: Create and run docker container
+   ansible.builtin.include_tasks: tasks/run_test.yml

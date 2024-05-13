@@ -9,3 +9,6 @@ registration-check-sheet.txt
 .images
 allure-results
 docker-results
+.vagrant
+src
+.*

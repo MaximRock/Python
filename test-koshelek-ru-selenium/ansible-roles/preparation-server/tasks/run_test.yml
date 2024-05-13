@@ -1,0 +1,43 @@
+---
+
+- name: Debug msg
+  ansible.builtin.debug:
+    msg: "=== running tests and installing Allure Servera in Docker ==="
+
+- name: Preparation file conftest.py
+  ansible.builtin.replace:
+    path: "{{ item.path }}"
+    regexp: "{{ item.regexp }}"
+    replace: "{{ item.replace }}"
+  loop:
+    - { path: "{{ path_folder_project }}/conftest.py", regexp: '^    # options.add_argument\("--headless"\)', replace: '    options.add_argument("--headless")' }
+    - { path: "{{ path_folder_project }}/conftest.py", regexp: '^    options.add_argument\("chrome"\)', replace: '    # options.add_argument("chrome")' }
+    - { path: "{{ path_folder_project }}/conftest.py", regexp: '^    # options.add_argument\("--window-size=1920,1080"\)', replace: '    options.add_argument("--window-size=1920,1080")' }
+    - { path: "{{ path_folder_project }}/conftest.py", regexp: '^    options.add_argument\("--start-maximized"\)', replace: '    # options.add_argument("--start-maximized")' }
+    - { path: "{{ path_folder_project }}/docker-compose.yml", regexp: '^      - ./docker-results/:/code/allure-results', replace: '      - /home/vagrant/src/docker-results/:/code/allure-results' }
+    - { path: "{{ path_folder_project }}/docker-compose.yml", regexp: '^      - ./screenshot/:/code/screenshot', replace: '      - /home/vagrant/src/screenshot/:/code/screenshot' }
+    
+
+- name: Create volumes for docker-compose.yml
+  ansible.builtin.file:
+    path: "{{ path_folder_src }}{{ item }}"  
+    state: directory
+    owner: vagrant
+    group: vagrant
+    mode: 0755
+  loop:
+    - docker-results
+    - screenshot
+
+- name: Docker compose up tests and allure server
+  community.docker.docker_compose:
+    project_src: "{{ item.project_src }}"
+    files: "{{ item.files }}"
+  loop:
+    - { project_src: "{{ path_folder_project }}", files: docker-compose.yml }
+    - { project_src: "{{ path_folder_allure_server }}", files: docker-compose.yml }
+
+- name: We wait for the port 8080 for 20 seconds
+  ansible.builtin.wait_for:
+    port: 8080
+    delay: 20

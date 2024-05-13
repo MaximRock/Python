@@ -1,0 +1,26 @@
+---
+
+- name: Debug msg
+  ansible.builtin.debug:
+    msg: "===== cloning and setting GitHub repository ======="
+
+- name: Create directories
+  ansible.builtin.file:
+    path: "{{ path_folder_code }}"
+    state: directory
+    owner: vagrant 
+    group: vagrant 
+    mode: 0755
+
+- name: Clone repo git 
+  ansible.builtin.git:
+    repo: "https://github.com/MaximRock/Python.git"    
+    dest: "{{ path_folder_code }}"
+    single_branch: yes
+    version: koshelek-ru-release-0.9
+
+
+- name: Removing unused directories
+  ansible.builtin.shell: ls | grep -v "{{ directory_name }}" | xargs rm -rf
+  args:
+    chdir: "{{ path_folder_code }}"

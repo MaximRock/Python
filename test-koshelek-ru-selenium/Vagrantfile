@@ -1,0 +1,39 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+NETWORK_BRIDGE = "enp4s0"
+CPUS = 2
+MEMORY = 4096
+SYNCED_FOLDER = "src/"
+
+$script = <<-SCRIPT
+echo "
+    ===== setting server ====="
+SCRIPT
+
+Vagrant.configure("2") do |config|
+
+    config.vm.box_check_update=false
+    config.vm.box = "ubuntu/jammy64"
+
+    config.vm.define "qa" do |qa|
+        qa.vm.network "private_network", ip: "192.168.1.100"
+        qa.vm.network "public_network", ip: "172.10.10.100", bridge: NETWORK_BRIDGE
+        qa.vm.hostname = "qa-test-docker"
+        qa.vm.synced_folder SYNCED_FOLDER, "/home/vagrant/src/"
+        qa.vm.provider "virtualbox" do |vb|
+            vb.gui = false
+            vb.memory = MEMORY
+            vb.cpus = CPUS
+            vb.check_guest_additions = false
+            vb.name = "qa-test-docker"
+        end
+    end
+
+    config.vm.provision "shell", inline: $script
+    config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "play.yml"
+    config.vm.provision "shell", path: "./allure-server/allure-report.sh"
+    end
+
+end
