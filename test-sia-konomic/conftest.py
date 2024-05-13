@@ -17,6 +17,7 @@ def get_chrome_options():
 def get_webdriver(request, get_chrome_options):
     options = get_chrome_options
     driver = webdriver.Chrome(service=Service(executable_path=ChromeDriverManager().install()), options=options)
-    url = 'https://exchange.konomik.com/authorization/signup'
+    url = 'https://koshelek.ru/authorization/signup'
+    # url = 'https://exchange.konomik.com/authorization/signup'
     request.cls.driver = driver
     driver.get(url)
