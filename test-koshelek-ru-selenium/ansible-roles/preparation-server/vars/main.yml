@@ -4,6 +4,6 @@
 ver_docker_compose: "v2.27.0"
 user_name: "vagrant"
 path_folder_code: "/home/vagrant/code/"
+path_folder_src: "/home/vagrant/"
 path_folder_project: "/home/vagrant/code/test-koshelek-ru-selenium/"
 path_folder_allure_server: "{{ path_folder_project }}/allure-server"
-# path_files: "{{ path_folder_project }}/test-koshelek-ru-selenium"

@@ -4,13 +4,11 @@
 NETWORK_BRIDGE = "enp4s0"
 CPUS = 2
 MEMORY = 4096
+SYNCED_FOLDER = "src/"
 
 $script = <<-SCRIPT
 echo "
-    =============================================
-                setting server
-    =============================================    
-"
+    ===== setting server ====="
 SCRIPT
 
 Vagrant.configure("2") do |config|
@@ -22,7 +20,7 @@ Vagrant.configure("2") do |config|
         qa.vm.network "private_network", ip: "192.168.1.100"
         qa.vm.network "public_network", ip: "172.10.10.100", bridge: NETWORK_BRIDGE
         qa.vm.hostname = "qa-test-docker"
-        qa.vm.synced_folder "src/", "/home/vagrant/src/"
+        qa.vm.synced_folder SYNCED_FOLDER, "/home/vagrant/src/"
         qa.vm.provider "virtualbox" do |vb|
             vb.gui = false
             vb.memory = MEMORY
@@ -35,7 +33,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision "shell", inline: $script
     config.vm.provision "ansible" do |ansible|
     ansible.playbook = "play.yml"
-    # config.vm.provision "shell", path: "./allure-server/allure-report.sh"
+    config.vm.provision "shell", path: "./allure-server/allure-report.sh"
     end
 
 end

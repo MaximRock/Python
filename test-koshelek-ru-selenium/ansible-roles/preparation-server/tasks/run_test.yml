@@ -37,9 +37,7 @@
     - { project_src: "{{ path_folder_project }}", files: docker-compose.yml }
     - { project_src: "{{ path_folder_allure_server }}", files: docker-compose.yml }
 
-- name: Waits for port 8080 of any IP to close active connections, don't start checking for 60 seconds
+- name: We wait for the port 8080 for 20 seconds
   ansible.builtin.wait_for:
-    host: 0.0.0.0
     port: 8080
-    delay: 60
-    state: drained
+    delay: 20
