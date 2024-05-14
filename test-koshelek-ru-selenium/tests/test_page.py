@@ -14,7 +14,7 @@ class TestPage:
 
     @pytest.mark.checkbox
     @allure.feature("fields_empty")
-    def test_all_fields_emptyty(self):
+    def test_all_fields_empty(self):
         """
         Check_box - Пользовательское соглашение
         Тест - все поля пустые, нажать кнопку "Далее"
