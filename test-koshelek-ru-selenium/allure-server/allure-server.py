@@ -49,10 +49,10 @@ from requests_toolbelt import MultipartEncoder
 # print(respons_post.json())
 
 
-res = os.system("curl -X 'POST' \
-  'http://192.168.1.100:8080/api/result' \
-  -H 'accept: */*' \
-  -H 'Content-Type: multipart/form-data' \
-  -F 'allureResults=@test_3.zip;type=application/zip'")
-
-print(res)
+# res = os.system("curl -X 'POST' \
+#   'http://192.168.1.100:8080/api/result' \
+#   -H 'accept: */*' \
+#   -H 'Content-Type: multipart/form-data' \
+#   -F 'allureResults=@test_3.zip;type=application/zip'")
+#
+# print(res)

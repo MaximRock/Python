@@ -1,24 +1,120 @@
 # Тестирование формы регистрации
 Стенд: https://koshelek.ru 
+
+- [Запуск тестов Vagrant](#vagrant)
+- [Запуск тестов pytest](#pytest)
+- [Запуск тестов docker](#docker)
+
+<h3 id="vagrant">Запуск тестов Vagrant</h3>
+#### Описание проекта
+Данный проект реализована установка сервера с использованием Vagrant, настройка сервера с использованием
+Ansible, установкой Allure-server.  
+
+Системные требования используемых инструментов:
+- VirtualBox Версия 6.1.48 
+- Vagrant 2.2.19: vm_box - ubuntu/jammy64
+- Ansible core 2.14.10
+- Allure-server - dockerhub [kochetkovma/allure-server](https://hub.docker.com/r/kochetkovma/allure-server)
+
+Запуск проекта:
+```bash
+ ./setup.sh
+ ```
+Скрипт _setup.sh_ - создает синхронизированный каталог _src_ в корне проекта и запускает _Vagrantfile_.  
+В свою очередь _Vagrantfile_ устанавливает _box ubuntu/jammy64_ и запускает ansible playbook, затем скрипт  
+_allure-report.sh_.
+### VAGRANT
+#### Пример использования Vagrant
+```ruby
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+NETWORK_BRIDGE = "enp4s0"
+CPUS = 2
+MEMORY = 4096
+SYNCED_FOLDER = "src/"
+
+$script = <<-SCRIPT
+echo "
+    ===== setting server ====="
+SCRIPT
+
+Vagrant.configure("2") do |config|
+
+    config.vm.box_check_update=false
+    config.vm.box = "ubuntu/jammy64"
+
+    config.vm.define "qa" do |qa|
+        qa.vm.network "private_network", ip: "192.168.1.100"
+        qa.vm.network "public_network", ip: "172.10.10.100", bridge: NETWORK_BRIDGE
+        qa.vm.hostname = "qa-test-docker"
+        qa.vm.synced_folder SYNCED_FOLDER, "/home/vagrant/src/"
+        qa.vm.provider "virtualbox" do |vb|
+            vb.gui = false
+            vb.memory = MEMORY
+            vb.cpus = CPUS
+            vb.check_guest_additions = false
+            vb.name = "qa-test-docker"
+        end
+    end
+
+    config.vm.provision "shell", inline: $script
+    config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "play.yml"
+    config.vm.provision "shell", path: "./allure-server/allure-report.sh"
+    end
+
+end
+```
+### ANSIBLE
+
+Роль _ansible_ находится в директории _ansible-role_.  
+#### Пример использования Ansible
+```ansible
+---
+# tasks file for qa-test
+
+ - name: Install required system packages
+   ansible.builtin.include_tasks: tasks/packages.yml
+
+ - name: Install Docker | docker-compose
+   ansible.builtin.include_tasks: tasks/docker.yml
+
+ - name: Clone Github repo
+   ansible.builtin.include_tasks: tasks/git.yml
+
+ - name: Running qa-tests | installation allure-server in docker
+   ansible.builtin.include_tasks: tasks/run_test.yml
+```
+### Установка Allure-server
+
+
+### Отчет Allure-server
+Запускается скрипт _allure-report.sh_
+
+
+<h3 id="pytest">Запуск тестов pytest</h3>
 ######
-Системные требования:
+Системные требования для проведения тестов:
 - Linux Ubuntu 22.04.4 LTS
 - Python 3.10
 - Браузер __Google Chrome__ Версия 122.0.6261.111 (Официальная сборка), (64 бит)
+- 
 
 Установка файла __requirements.txt__
-````
+```bash
 pip3 install -r requirements.txt
-````
+```
 ## Запуск тестов
 
 ### Запуск тестов в pytest
 При запуске тестов указываем маркер __-m pairs__ и директорию __--alluredir=allure-results__ для составления отчетов
-````
+```bash
 pytest -v -m screenshot --alluredir=allure-results
-````
+```
 Файл __conftest.py__ фикстура __def get_chrome_options()__ должна иметь следующий вид:
-````
+
+```python
 @pytest.fixture
 def get_chrome_options():
     options = chrome_options()
@@ -29,7 +125,7 @@ def get_chrome_options():
     # options.add_argument("--window-size=1920,1080")
     options.add_argument('--start-maximized')
     return options
-````
+```
 
 ### markers:
 ````
@@ -40,12 +136,13 @@ checkbox: тесты проверки checkbox пользовательское 
 username: тесты проверки всплывающего окна Имя пользователя недействительно (не будут выбраны при запуске с '-m "not username"')
 all_tests: запуск всех тестов
 ````
-### Запуск тестов в docker
+
+<h3 id="docker">Запуск тестов docker</h3>
 
 Перед запуском тестов в docker:
 - В корне проекта создать директорию __doker-result__,
 - Обязательно файл __conftest.py__ фикстура __def get_chrome_options()__ должна иметь следующий вид:  
-````
+```python
 @pytest.fixture
 def get_chrome_options():
     options = chrome_options()
@@ -56,7 +153,7 @@ def get_chrome_options():
     options.add_argument("--window-size=1920,1080")
     # options.add_argument('--start-maximized')
     return options
-````
+```
 Запуск тестов в docker:
 ````
 sudo docker-compose up

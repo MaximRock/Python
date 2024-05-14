@@ -10,5 +10,5 @@
  - name: Clone Github repo
    ansible.builtin.include_tasks: tasks/git.yml
 
- - name: Create and run docker container
+ - name: Running qa-tests | installation allure-server in docker
    ansible.builtin.include_tasks: tasks/run_test.yml
