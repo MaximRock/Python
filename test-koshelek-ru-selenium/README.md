@@ -6,11 +6,11 @@
 - [Запуск тестов docker](#docker)
 
 <h3 id="vagrant">Запуск тестов Vagrant</h3>
+
 #### Описание проекта
 Данный проект реализована установка сервера с использованием Vagrant, настройка сервера с использованием
 Ansible, установкой Allure-server.  
-
-Системные требования используемых инструментов:
+Используемые инструменты:
 - VirtualBox Версия 6.1.48 
 - Vagrant 2.2.19: vm_box - ubuntu/jammy64
 - Ansible core 2.14.10
@@ -20,9 +20,7 @@ Ansible, установкой Allure-server.
 ```bash
  ./setup.sh
  ```
-Скрипт _setup.sh_ - создает синхронизированный каталог _src_ в корне проекта и запускает _Vagrantfile_.  
-В свою очередь _Vagrantfile_ устанавливает _box ubuntu/jammy64_ и запускает ansible playbook, затем скрипт  
-_allure-report.sh_.
+Скрипт _setup.sh_ - создает синхронизированный каталог _src_ в корне проекта и запускает _Vagrantfile_. В свою очередь _Vagrantfile_ устанавливает _box ubuntu/jammy64_ и запускает ansible playbook, затем скрипт _allure-report.sh_.
 ### VAGRANT
 #### Пример использования Vagrant
 ```ruby
@@ -67,7 +65,6 @@ Vagrant.configure("2") do |config|
 end
 ```
 ### ANSIBLE
-
 Роль _ansible_ находится в директории _ansible-role_.  
 #### Пример использования Ansible
 ```ansible
@@ -92,22 +89,17 @@ end
 ### Отчет Allure-server
 Запускается скрипт _allure-report.sh_
 
-
 <h3 id="pytest">Запуск тестов pytest</h3>
-######
+
 Системные требования для проведения тестов:
 - Linux Ubuntu 22.04.4 LTS
 - Python 3.10
 - Браузер __Google Chrome__ Версия 122.0.6261.111 (Официальная сборка), (64 бит)
-- 
-
+  
 Установка файла __requirements.txt__
 ```bash
 pip3 install -r requirements.txt
 ```
-## Запуск тестов
-
-### Запуск тестов в pytest
 При запуске тестов указываем маркер __-m pairs__ и директорию __--alluredir=allure-results__ для составления отчетов
 ```bash
 pytest -v -m screenshot --alluredir=allure-results
@@ -156,7 +148,7 @@ def get_chrome_options():
 ```
 Запуск тестов в docker:
 ````
-sudo docker-compose up
+sudo docker-compose up -d
 ````
 В файле __docker-compose.py__ так же можно менять маркеры для запуска различных тестов __-m checkbox__:
 ````
